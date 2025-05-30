@@ -1,6 +1,6 @@
 {
   "name": "nestjs-app",
-  "version": "1.0.0",
+  "version": "0.0.4",
   "description": "Spring Boot-like Node.js app using NestJS",
   "scripts": {
     "start": "nest start",
