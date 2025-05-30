@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
+import { UserResponseDto } from './dto/user-response.dto';
+import { UserRequestDto } from './dto/user-request.dto'; // Import the request DTO
 import { Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
-// src/user/user.service.ts
+
 @Injectable()
 export class UserService {
   constructor(
@@ -11,24 +13,26 @@ export class UserService {
     private userRepo: Repository<User>,
   ) {}
 
-  findAll(): Promise<User[]> {
-    return this.userRepo.find();
+  async findAll(): Promise<UserResponseDto[]> {
+    const users = await this.userRepo.find();
+    return users.map(user => this.toResponseDto(user));
   }
 
-  create(userData: Partial<User>): Promise<User> {
+  async create(userData: UserRequestDto): Promise<UserResponseDto> {
     const user = this.userRepo.create(userData);
-    return this.userRepo.save(user);
+    const savedUser = await this.userRepo.save(user);
+    return this.toResponseDto(savedUser);
   }
 
-  async findOne(id: number): Promise<User> {
+  async findOne(id: number): Promise<UserResponseDto> {
     const user = await this.userRepo.findOne({ where: { id } });
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
-    return user;
+    return this.toResponseDto(user);
   }
 
-  async update(id: number, userData: Partial<User>): Promise<User> {
+  async update(id: number, userData: UserRequestDto): Promise<UserResponseDto> {
     await this.userRepo.update(id, userData);
     return this.findOne(id);
   }
@@ -38,5 +42,10 @@ export class UserService {
     if (result.affected === 0) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
+  }
+
+  private toResponseDto(user: User): UserResponseDto {
+    const { id, name, email, age } = user;
+    return { id, name, email, age };
   }
 }
