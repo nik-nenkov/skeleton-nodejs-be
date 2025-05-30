@@ -1,0 +1,36 @@
+{
+  "name": "nestjs-app",
+  "version": "1.0.0",
+  "description": "Spring Boot-like Node.js app using NestJS",
+  "type": "commonjs",                          
+  "scripts": {
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "clean": "rm -rf target",                     
+    "build": "npm run clean && nest build",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "test": "jest",
+    "lint": "eslint . --ext .ts"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.2",
+    "@nestjs/core": "^11.1.2",
+    "@nestjs/platform-express": "^11.1.2",
+    "@nestjs/typeorm": "^11.0.0",
+    "pg": "^8.16.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "typeorm": "^0.3.24"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.7",
+    "@nestjs/schematics": "^11.0.5",
+    "@nestjs/testing": "^11.1.2",
+    "@types/node": "^22.15.27",
+    "typescript": "^5.8.3",
+    "prettier": "^3.5.3",                       
+    "eslint": "^9.27.0",                        
+    "@typescript-eslint/eslint-plugin": "^8.33.0",
+    "@typescript-eslint/parser": "^8.33.0"
+  }
+}

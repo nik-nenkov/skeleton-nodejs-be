@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",                        // or ESNext for top-level await, etc.
+    "module": "commonjs",                        // Use native ESM if you're ready
+    "moduleResolution": "node",
+    "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  }
+}
