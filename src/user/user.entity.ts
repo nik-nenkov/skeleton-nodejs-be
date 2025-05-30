@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Listing } from '../listing/listing.entity';
 
 @Entity()
 export class User {
@@ -20,6 +21,9 @@ export class User {
 
   @Column({ default: true }) // Active status with default value
   isActive: boolean = true;
+
+  @OneToMany(() => Listing, (listing: Listing) => listing.user)
+  listings?: Listing[];
 
   constructor(partial?: Partial<User>) {
     Object.assign(this, partial);

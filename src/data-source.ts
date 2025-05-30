@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 config();
 
 import { User } from './user/user.entity';
+import { Listing } from './listing/listing.entity';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  entities: [User],
+  entities: [User, Listing],  // добавяне на User и Listing
   migrations: ['src/migrations/*.ts'],  // миграциите на TS
   synchronize: false,
 });
