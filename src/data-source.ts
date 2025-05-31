@@ -1,8 +1,11 @@
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
 config();
-
-import { User } from './user/user.entity';
+// Importing entities for the data source
+// This file sets up the TypeORM data source for the application, connecting to a PostgreSQL database.
+// It uses environment variables for configuration and includes the User and Listing entities.
+// src/data-source.ts
+import { User } from './user/orm/user.entity';
 import { Listing } from './listing/listing.entity';
 
 export const AppDataSource = new DataSource({

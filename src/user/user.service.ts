@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './user.entity';
-import { UserResponseDto } from './dto/user-response.dto';
-import { UserRequestDto } from './dto/user-request.dto'; // Import the request DTO
+import { User } from './orm/user.entity';
+import { UserResponseDto } from './api/user-response.dto';
+import { UserRequestDto } from './api/user-request.dto'; // Import the request DTO
 import { Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
+import { toUserResponseDto } from './user.mapping';
 
 @Injectable()
 export class UserService {
@@ -15,13 +16,13 @@ export class UserService {
 
   async findAll(): Promise<UserResponseDto[]> {
     const users = await this.userRepo.find();
-    return users.map(user => this.toResponseDto(user));
+    return users.map(user => toUserResponseDto(user));
   }
 
   async create(userData: UserRequestDto): Promise<UserResponseDto> {
     const user = this.userRepo.create(userData);
     const savedUser = await this.userRepo.save(user);
-    return this.toResponseDto(savedUser);
+    return toUserResponseDto(savedUser);
   }
 
   async findOne(id: number): Promise<UserResponseDto> {
@@ -29,7 +30,7 @@ export class UserService {
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
-    return this.toResponseDto(user);
+    return toUserResponseDto(user);
   }
 
   async update(id: number, userData: UserRequestDto): Promise<UserResponseDto> {
@@ -42,10 +43,5 @@ export class UserService {
     if (result.affected === 0) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
-  }
-
-  private toResponseDto(user: User): UserResponseDto {
-    const { id, name, email, age } = user;
-    return { id, name, email, age };
   }
 }

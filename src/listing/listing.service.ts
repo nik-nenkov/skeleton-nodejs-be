@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Listing } from './listing.entity';
 import { ListingRequestDto } from './dto/listing-request.dto';
 import { ListingResponseDto } from './dto/listing-response.dto';
-import { User } from '../user/user.entity';
+import { User } from '../user/orm/user.entity';
 
 @Injectable()
 export class ListingService {
